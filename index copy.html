@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TestService</title>
+        <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
+        <!-- <script type="module" src="./scripts/index.js">
+        </script> -->
+
+    </head>
+
+    <body>
+        <div class="main-div" id="login">
+            <h1>wlecome to logi test</h1>
+            <div class="error">
+                Wrong username or password
+            </div>
+            <input type="email" id="email">
+            <input type="password" id="pwd">
+            <button id="login" onclick="login()">Login</button>
+            <button id="signup" onclick="signup()">Signup</button>
+        </div>
+
+        <div class="logedin" id="user">
+            <h3>manage account</h3>
+            <button onclick="manageAccount()">Manage Account</button>
+        </div>
+        <script>
+
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
+            import {
+                getFirestore,
+                collection,
+                getDocs,
+            } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
+
+            import { getAuth } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js";
+            const firebaseConfig = {
+                apiKey: "AIzaSyApDLiOvCkuhozs-7_ebxCkeYRbaaPaClw",
+                authDomain: "opp-online-placement-portal.firebaseapp.com",
+                projectId: "opp-online-placement-portal",
+                storageBucket: "opp-online-placement-portal.appspot.com",
+                messagingSenderId: "1018033370321",
+                appId: "1:1018033370321:web:063832ae90f0b9bb6c01f0",
+            };
+            const app = initializeApp(firebaseConfig);
+
+            const auth = getAuth();
+            const db = getFirestore(app);
+
+            function login() {
+                let email = document.querySelector("#email").value;
+                let password = document.querySelector("#pwd").value;
+                auth.signInWithEmailAndPassword(email, password);
+            }
+            auth.onAuthStateChanged((user) => {
+                let userDiv = document.querySelector(".main-div");
+                let loginDiv = document.querySelector(".logedin");
+                console.log(loginDiv, userDiv);
+                if (user) {
+                    userDiv.style.display = "none";
+                    loginDiv.style.display = "block";
+                } else {
+                    userDiv.style.display = "block";
+                    loginDiv.style.display = "none";
+                }
+            });
+        </script>
+
+        <!-- <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js"></script> -->
+        <!-- <script type="module" src="./scripts/index.js"></script> -->
+    </body>
+
+</html>

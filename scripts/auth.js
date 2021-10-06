@@ -1,12 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
-
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-} from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js";
-
-import { getFirestore } from "https://www.gstatic.com/firefirebasejs/9.0.2/firebase-firestore.js";
-
 const firebaseApp = initializeApp({
   apiKey: "AIzaSyApDLiOvCkuhozs-7_ebxCkeYRbaaPaClw",
   authDomain: "opp-online-placement-portal.firebaseapp.com",
@@ -16,10 +7,10 @@ const firebaseApp = initializeApp({
   appId: "1:1018033370321:web:063832ae90f0b9bb6c01f0",
 });
 
-const auth = getAuth(firebaseApp);
+const auth = firebase.auth();
 const db = getFirestore(firebaseApp);
 
-// db.settings({ timestampsInSnapshots: true });
+db.settings({ timestampsInSnapshots: true });
 
 const signupform = document.querySelector("#signup-form");
 // console.log(signupform);
@@ -33,14 +24,25 @@ signupform.addEventListener("submit", (e) => {
 
   console.log(email, password);
 
+  let Signup = () => {
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((cred) => {
+        console.log(cred);
+      })
+      .catch((err) => {
+        console.log(error.code);
+        console.log(erroe.message);
+      });
+  };
   // signup the users
 
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      console.log(userCredential);
-    })
-    .catch((error) => {
-      console.log(error.code);
-      console.log(erroe.message);
-    });
+  // createUserWithEmailAndPassword(auth, email, password)
+  //   .then((userCredential) => {
+  //     console.log(userCredential);
+  //   })
+  //   .catch((error) => {
+  //     console.log(error.code);
+  //     console.log(erroe.message);
+  //   });
 });
